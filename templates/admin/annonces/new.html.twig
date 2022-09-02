@@ -4,9 +4,36 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Create new Annonces</h1>
+	<h1>Nouvelle annonce</h1>
 
 	{{ include('admin/annonces/_form.html.twig') }}
 
-	<a href="{{ path('app_annonces_index') }}">back to list</a>
+	<a href="{{ path('app_annonces_index') }}">Retour à la liste</a>
+
+
+	<script>
+		var $marque = $('#annonces_marque');
+// When sport gets selected ...
+$marque.change(function () { // ... retrieve the corresponding form.
+console.log("ojo")
+var $form = $(this).closest('form');
+// Simulate form data, but only include the selected sport value.
+var data = {};
+data[$marque.attr('name')] = $marque.val();
+// Submit data via AJAX to the form's action path.
+$.ajax({
+url: $form.attr('action'),
+type: $form.attr('method'),
+data: data,
+complete: function (html) { // Replace current position field ...
+$('#annonces_modele').replaceWith(
+// ... with the returned one from the AJAX response.
+$(html.responseText).find('#annonces_modele')
+);
+// Position field now displays the appropriate positions.
+}
+});
+});
+	</script>
+
 {% endblock %}
