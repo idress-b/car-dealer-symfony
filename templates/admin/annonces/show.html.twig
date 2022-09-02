@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Annonces{% endblock %}
+
+{% block body %}
+    <h1>Annonces</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ annonce.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ annonce.title }}</td>
+            </tr>
+            <tr>
+                <th>Subtitle</th>
+                <td>{{ annonce.subtitle }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ annonce.description }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ annonce.price }}</td>
+            </tr>
+            <tr>
+                <th>Annee</th>
+                <td>{{ annonce.annee }}</td>
+            </tr>
+            <tr>
+                <th>Mec</th>
+                <td>{{ annonce.mec ? annonce.mec|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Carburant</th>
+                <td>{{ annonce.carburant }}</td>
+            </tr>
+            <tr>
+                <th>GearBox</th>
+                <td>{{ annonce.gearBox }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ annonce.type }}</td>
+            </tr>
+            <tr>
+                <th>Portes</th>
+                <td>{{ annonce.portes }}</td>
+            </tr>
+            <tr>
+                <th>Places</th>
+                <td>{{ annonce.places }}</td>
+            </tr>
+            <tr>
+                <th>Kilometrage</th>
+                <td>{{ annonce.kilometrage }}</td>
+            </tr>
+            <tr>
+                <th>Cv</th>
+                <td>{{ annonce.cv }}</td>
+            </tr>
+            <tr>
+                <th>Color</th>
+                <td>{{ annonce.color }}</td>
+            </tr>
+            <tr>
+                <th>CritAir</th>
+                <td>{{ annonce.critAir }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_annonces_index') }}">back to list</a>
+
+    <a href="{{ path('app_annonces_edit', {'id': annonce.id}) }}">edit</a>
+
+    {{ include('annonces/_delete_form.html.twig') }}
+{% endblock %}
