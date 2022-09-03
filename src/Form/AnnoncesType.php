@@ -21,15 +21,10 @@ class AnnoncesType extends AbstractType
         $builder
             ->add('marque', EntityType::class, [
                 'class' => Marques::class,
-                //  'mapped' => false,
+                
                 'placeholder' => '<< -choisissez- >>',
-                //  'compound' => true
-
+              
             ])
-
-
-
-
             ->add('title')
             ->add('subtitle')
             ->add('description')
@@ -52,12 +47,12 @@ class AnnoncesType extends AbstractType
         // ]);
 
         $formModifier = function (FormInterface $form, Marques $marque = null) {
-            $marqueId = null === $marque ? [] : $marque->getModeles();
-            if ($marque !== null) dd($marqueId);
+            $modele = null === $marque ? [] : $marque->getModeles();
+           
             $form->add('modele', EntityType::class, [
                 'class' => Modeles::class,
                 'placeholder' => 'placeholder',
-                'choices' => $marqueId,
+                'choices' => $modele,
                 'required' => false
             ]);
         };
@@ -66,12 +61,13 @@ class AnnoncesType extends AbstractType
 
             $form = $event->getForm();
             $data = $event->getData();
-            dd($data);
-            $formModifier($form,);
+          
+            $formModifier($form,$data->getMarque());
         });
 
         $builder->get('marque')->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($formModifier) {
             $marque = $event->getForm()->getData();
+            
             $formModifier($event->getForm()->getParent(), $marque);
         });
     }

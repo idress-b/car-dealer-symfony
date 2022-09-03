@@ -12,28 +12,33 @@
 
 
 	<script>
-		var $marque = $('#annonces_marque');
+		var marque = $('#annonces_marque');
 // When sport gets selected ...
-$marque.change(function () { // ... retrieve the corresponding form.
-console.log("ojo")
-var $form = $(this).closest('form');
-// Simulate form data, but only include the selected sport value.
-var data = {};
-data[$marque.attr('name')] = $marque.val();
-// Submit data via AJAX to the form's action path.
-$.ajax({
-url: $form.attr('action'),
-type: $form.attr('method'),
-data: data,
-complete: function (html) { // Replace current position field ...
-$('#annonces_modele').replaceWith(
-// ... with the returned one from the AJAX response.
-$(html.responseText).find('#annonces_modele')
+marque.change(function () { // ... retrieve the corresponding form.
+
+	
+    // ... retrieve the corresponding form.
+	var $form = $(this).closest('form');
+
+    console.log($form);
+    // Simulate form data, but only include the selected sport value.
+    var data = {};
+    data[marque.attr('name')] = marque.val();
+    // Submit data via AJAX to the form's action path.
+    jQuery.ajax({
+        url : $form.attr('action'),
+        type: "POST",
+        data: data,
+        success: function (html) {
+            console.log(html)
+            $("#annonces_modele").replaceWith(
+                // ... with the returned one from the AJAX response.
+                $(html).find("#annonces_modele")
+            );
+            // Position field now displays the appropriate positions.
+        }})
+    }
 );
-// Position field now displays the appropriate positions.
-}
-});
-});
 	</script>
 
 {% endblock %}

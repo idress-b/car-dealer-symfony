@@ -68,6 +68,10 @@ class Annonces
     #[ORM\JoinColumn(nullable: false)]
     private ?Modeles $modele = null;
 
+    #[ORM\ManyToOne(inversedBy: 'annonces')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Marques $marque = null;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -296,6 +300,18 @@ class Annonces
     public function setModele(?Modeles $modele): self
     {
         $this->modele = $modele;
+
+        return $this;
+    }
+
+    public function getMarque(): ?Marques
+    {
+        return $this->marque;
+    }
+
+    public function setMarque(?Marques $marque): self
+    {
+        $this->marque = $marque;
 
         return $this;
     }
