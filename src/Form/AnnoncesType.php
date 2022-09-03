@@ -8,26 +8,30 @@ use App\Entity\Modeles;
 use App\Repository\ModelesRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormInterface;
+
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class AnnoncesType extends AbstractType
 {
+   public function __construct(private ModelesRepository $modelesRepository)
+   {
+
+   }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('marque', EntityType::class, [
                 'class' => Marques::class,
                 'placeholder' => '<< -choisissez- >>',
-                'choice_label' => 'marque',
-                'mapped' => false,
-                'required' => false
-
-            ])
+                'mapped'=>false
+                ])
+           
             ->add('modele', EntityType::class, [
                 'class' => Modeles::class,
                 'placeholder' => 'choisir un modèle',
@@ -38,7 +42,6 @@ class AnnoncesType extends AbstractType
             ->add('description')
             ->add('price')
             ->add('annee')
-            // ->add('mec')
             ->add('carburant')
             ->add('gearBox')
             ->add('type')
@@ -50,35 +53,21 @@ class AnnoncesType extends AbstractType
             ->add('critAir');
 
 
-        $formModifier = function (FormInterface $form, Marques $marque = null) {
-
-            $modeles = null === $marque ? [] : $marque->getModeles();
-            dd($marque);
-            $form->add('modele', EntityType::class, [
-                'class' => Modeles::class,
-                'choices' => $modeles,
-                // 'query_builder' => function (ModelesRepository $repository, $int) {
-                //     return $repository->createQueryBuilder('m')
-                //         ->andWhere('m.marque = :val')
-                //         ->setParameter('val', $int);
-                // },
-
-                'required' => false
-            ]);
-        };
-
-
-
+     
         $builder->get('marque')->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
-            $marque = $event->getForm()->getData();
-            $modeles = null === $marque ? [] : $marque->getModeles();
-            dd($marque);
+            $marqueId= (int)$event->getData();
+                    
+            $modeles = $this->modelesRepository->findBy([
+                'marque' => $marqueId
+            ]);
 
-
-            $event->getForm()->getParent()
+          $form=  $event->getForm()->getParent();
+        
+          $form
                 ->add('modele', EntityType::class, [
                     'class' => Modeles::class,
-                    'choices' => $modeles,
+                   'choices' => $modeles,
+                 
                     'required' => false
                 ]);
         });

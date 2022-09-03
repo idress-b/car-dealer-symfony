@@ -21,13 +21,11 @@ class Marques
     #[ORM\OneToMany(mappedBy: 'marque', targetEntity: Modeles::class, orphanRemoval: true)]
     private Collection $modeles;
 
-    #[ORM\OneToMany(mappedBy: 'marque', targetEntity: Annonces::class)]
-    private Collection $annonces;
 
     public function __construct()
     {
         $this->modeles = new ArrayCollection();
-        $this->annonces = new ArrayCollection();
+       
     }
 
     public function getId(): ?int
@@ -82,33 +80,5 @@ class Marques
         return $this->marque;
     }
 
-    /**
-     * @return Collection<int, Annonces>
-     */
-    public function getAnnonces(): Collection
-    {
-        return $this->annonces;
-    }
-
-    public function addAnnonce(Annonces $annonce): self
-    {
-        if (!$this->annonces->contains($annonce)) {
-            $this->annonces->add($annonce);
-            $annonce->setMarque($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAnnonce(Annonces $annonce): self
-    {
-        if ($this->annonces->removeElement($annonce)) {
-            // set the owning side to null (unless already changed)
-            if ($annonce->getMarque() === $this) {
-                $annonce->setMarque(null);
-            }
-        }
-
-        return $this;
-    }
+  
 }

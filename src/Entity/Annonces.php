@@ -31,8 +31,7 @@ class Annonces
     #[ORM\Column]
     private ?int $annee = null;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    private ?\DateTimeImmutable $mec = null;
+   
 
     #[ORM\Column(length: 20)]
     private ?string $carburant = null;
@@ -68,9 +67,7 @@ class Annonces
     #[ORM\JoinColumn(nullable: false)]
     private ?Modeles $modele = null;
 
-    #[ORM\ManyToOne(inversedBy: 'annonces')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Marques $marque = null;
+   
 
     public function __construct()
     {
@@ -142,18 +139,7 @@ class Annonces
         return $this;
     }
 
-    public function getMec(): ?\DateTimeImmutable
-    {
-        return $this->mec;
-    }
-
-    public function setMec(\DateTimeImmutable $mec): self
-    {
-        $this->mec = $mec;
-
-        return $this;
-    }
-
+   
     public function getCarburant(): ?string
     {
         return $this->carburant;
@@ -304,15 +290,5 @@ class Annonces
         return $this;
     }
 
-    public function getMarque(): ?Marques
-    {
-        return $this->marque;
-    }
-
-    public function setMarque(?Marques $marque): self
-    {
-        $this->marque = $marque;
-
-        return $this;
-    }
+    
 }
