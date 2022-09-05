@@ -1,4 +1,33 @@
 {{ form_start(form) }}
-{{ form_widget(form) }}
-<button class="btn">{{ button_label|default('Enregistrer') }}</button>
+<div class="row">
+	<div class="col-12 col-lg-6">
+		{{ form_row(form.marque) }}
+		{{form_row(form.annee)}}
+
+	</div>
+	<div class="col-12 col-lg-6">
+		{{form_row(form.modele)}}
+		<br>
+
+	</div>
+
+</div>
+<div class="row">
+	<div class="col-12 col-lg-6">
+		{{form_row(form.carburant, {'attr':{'class':'inline-tags'}}) }}
+		{{ form_row(form.type)}}
+		{{ form_row(form.places)}}
+		{{ form_row(form.kilometrage)}}
+		{{form_row(form.critAir, {'attr':{'class':'inline-tags'}}) }}
+
+	</div>
+	<div class="col-12 col-lg-6">
+		{{form_row(form.gearBox, {'attr':{'class':'inline-tags'}})}}
+		{{ form_row(form.portes)}}
+		{{ form_row(form.cv)}}
+		{{ form_row(form.color)}}
+	</div>
+</div>
+
+<button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}
