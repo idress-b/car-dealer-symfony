@@ -8,7 +8,7 @@ use App\Entity\Modeles;
 use App\Repository\ModelesRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -43,6 +43,14 @@ class AnnoncesType extends AbstractType
             ->add('price')
             ->add('annee')
             ->add('carburant')
+            ->add('carburant',ChoiceType::class,[
+                'expanded'=>true,
+                'multiple'=>false,
+                'choices'=>[
+                    'essence'=>'essence',
+                    'diesel'=>'diesel'
+                ]
+            ])
             ->add('gearBox')
             ->add('type')
             ->add('portes')
