@@ -28,44 +28,15 @@ class Annonces
     #[ORM\Column]
     private ?float $price = null;
 
-    #[ORM\Column]
-    private ?int $annee = null;
-
    
-
-    #[ORM\Column(length: 20)]
-    private ?string $carburant = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $gearBox = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $type = null;
-
-    #[ORM\Column(length: 255)]
-    private ?int $portes = null;
-
-    #[ORM\Column]
-    private ?int $places = null;
-
-    #[ORM\Column]
-    private ?int $kilometrage = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?int $cv = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $color = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $critAir = null;
 
     #[ORM\OneToMany(mappedBy: 'annonce', targetEntity: Images::class, orphanRemoval: true)]
     private Collection $images;
 
-    #[ORM\ManyToOne(inversedBy: 'annonces')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Modeles $modele = null;
+    #[ORM\OneToOne(mappedBy: 'annonce', cascade: ['persist', 'remove'])]
+    private ?Car $car = null;
+
+   
 
    
 
@@ -127,126 +98,10 @@ class Annonces
         return $this;
     }
 
-    public function getAnnee(): ?int
-    {
-        return $this->annee;
-    }
-
-    public function setAnnee(int $annee): self
-    {
-        $this->annee = $annee;
-
-        return $this;
-    }
+   
 
    
-    public function getCarburant(): ?string
-    {
-        return $this->carburant;
-    }
-
-    public function setCarburant(string $carburant): self
-    {
-        $this->carburant = $carburant;
-
-        return $this;
-    }
-
-    public function getGearBox(): ?string
-    {
-        return $this->gearBox;
-    }
-
-    public function setGearBox(string $gearBox): self
-    {
-        $this->gearBox = $gearBox;
-
-        return $this;
-    }
-
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    public function getPortes(): ?string
-    {
-        return $this->portes;
-    }
-
-    public function setPortes(string $portes): self
-    {
-        $this->portes = $portes;
-
-        return $this;
-    }
-
-    public function getPlaces(): ?int
-    {
-        return $this->places;
-    }
-
-    public function setPlaces(int $places): self
-    {
-        $this->places = $places;
-
-        return $this;
-    }
-
-    public function getKilometrage(): ?int
-    {
-        return $this->kilometrage;
-    }
-
-    public function setKilometrage(int $kilometrage): self
-    {
-        $this->kilometrage = $kilometrage;
-
-        return $this;
-    }
-
-    public function getCv(): ?int
-    {
-        return $this->cv;
-    }
-
-    public function setCv(?int $cv): self
-    {
-        $this->cv = $cv;
-
-        return $this;
-    }
-
-    public function getColor(): ?string
-    {
-        return $this->color;
-    }
-
-    public function setColor(?string $color): self
-    {
-        $this->color = $color;
-
-        return $this;
-    }
-
-    public function getCritAir(): ?string
-    {
-        return $this->critAir;
-    }
-
-    public function setCritAir(?string $critAir): self
-    {
-        $this->critAir = $critAir;
-
-        return $this;
-    }
+   
 
     /**
      * @return Collection<int, Images>
@@ -278,17 +133,24 @@ class Annonces
         return $this;
     }
 
-    public function getModele(): ?Modeles
+    public function getCar(): ?Car
     {
-        return $this->modele;
+        return $this->car;
     }
 
-    public function setModele(?Modeles $modele): self
+    public function setCar(Car $car): self
     {
-        $this->modele = $modele;
+        // set the owning side of the relation if necessary
+        if ($car->getAnnonce() !== $this) {
+            $car->setAnnonce($this);
+        }
+
+        $this->car = $car;
 
         return $this;
     }
+
+   
 
     
 }

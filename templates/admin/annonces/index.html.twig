@@ -13,18 +13,7 @@
                 <th>Subtitle</th>
                 <th>Description</th>
                 <th>Price</th>
-                <th>Annee</th>
-               
-                <th>Carburant</th>
-                <th>GearBox</th>
-                <th>Type</th>
-                <th>Portes</th>
-                <th>Places</th>
-                <th>Kilometrage</th>
-                <th>Cv</th>
-                <th>Color</th>
-                <th>CritAir</th>
-                <th>actions</th>
+              
             </tr>
         </thead>
         <tbody>
@@ -35,17 +24,7 @@
                 <td>{{ annonce.subtitle }}</td>
                 <td>{{ annonce.description }}</td>
                 <td>{{ annonce.price }}</td>
-                <td>{{ annonce.annee }}</td>
                
-                <td>{{ annonce.carburant }}</td>
-                <td>{{ annonce.gearBox }}</td>
-                <td>{{ annonce.type }}</td>
-                <td>{{ annonce.portes }}</td>
-                <td>{{ annonce.places }}</td>
-                <td>{{ annonce.kilometrage }}</td>
-                <td>{{ annonce.cv }}</td>
-                <td>{{ annonce.color }}</td>
-                <td>{{ annonce.critAir }}</td>
                 <td>
                     <a href="{{ path('app_annonces_show', {'id': annonce.id}) }}">show</a>
                     <a href="{{ path('app_annonces_edit', {'id': annonce.id}) }}">edit</a>
@@ -59,5 +38,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_annonces_new') }}">Create new</a>
+    <a href="{{ path('app_annonces_new_first') }}">Create new</a>
 {% endblock %}

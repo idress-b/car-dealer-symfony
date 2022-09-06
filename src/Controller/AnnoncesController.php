@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Annonces;
-use App\Form\AnnoncesType;
+use App\Entity\Car;
+use App\Form\AnnonceType;
+use App\Form\CarType;
 use App\Repository\AnnoncesRepository;
+use App\Repository\CarRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,11 +24,31 @@ class AnnoncesController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_annonces_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, AnnoncesRepository $annoncesRepository): Response
+  
+    #[Route('/new/step1', name: 'app_annonces_new_first', methods: ['GET', 'POST'])]
+    public function newCar(Request $request, CarRepository $carRepository): Response
+    {
+        $car = new Car();
+        $form = $this->createForm(CarType::class, $car);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $carRepository->add($car, false);
+
+            return $this->redirectToRoute('app_annonces_new_second',array('id'=>$car->getId()));
+        }
+
+        return $this->renderForm('admin/annonces/new_first.html.twig', [
+            'car' => $car,
+            'form' => $form,
+        ]);
+    }
+    #[Route('/new/step2/{id}', name: 'app_annonces_new_second', methods: ['GET', 'POST'])]
+    public function new(Request $request, AnnoncesRepository $annoncesRepository,CarRepository $carRepository,$id): Response
     {
         $annonce = new Annonces();
-        $form = $this->createForm(AnnoncesType::class, $annonce);
+        $car=$carRepository->findBy($id);
+        $form = $this->createForm(AnnonceType::class, $annonce);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

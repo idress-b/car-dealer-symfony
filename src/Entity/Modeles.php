@@ -25,9 +25,16 @@ class Modeles
     #[ORM\OneToMany(mappedBy: 'modele', targetEntity: Annonces::class)]
     private Collection $annonces;
 
+    #[ORM\OneToMany(mappedBy: 'modele', targetEntity: Car::class)]
+    private Collection $cars;
+
+    #[ORM\Column(length: 255)]
+    private ?string $rappel_marque = null;
+
     public function __construct()
     {
         $this->annonces = new ArrayCollection();
+        $this->cars = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -92,5 +99,47 @@ class Modeles
     public function __toString()
     {
         return $this->modele;
+    }
+
+    /**
+     * @return Collection<int, Car>
+     */
+    public function getCars(): Collection
+    {
+        return $this->cars;
+    }
+
+    public function addCar(Car $car): self
+    {
+        if (!$this->cars->contains($car)) {
+            $this->cars->add($car);
+            $car->setModele($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCar(Car $car): self
+    {
+        if ($this->cars->removeElement($car)) {
+            // set the owning side to null (unless already changed)
+            if ($car->getModele() === $this) {
+                $car->setModele(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getRappelMarque(): ?string
+    {
+        return $this->rappel_marque;
+    }
+
+    public function setRappelMarque(string $rappel_marque): self
+    {
+        $this->rappel_marque = $rappel_marque;
+
+        return $this;
     }
 }

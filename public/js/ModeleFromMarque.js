@@ -1,5 +1,5 @@
 window.onload = () => {
-  let marque = document.querySelector("#annonces_marque");
+  const marque = document.querySelector("#car_marque");
   marque.addEventListener("change", function () {
     let form = document.querySelector("form");
     let data = this.name + " = " + this.value;
@@ -16,9 +16,9 @@ window.onload = () => {
         let content = document.createElement("html");
         content.innerHTML = html;
 
-        let nouveauSelect = content.querySelector("#annonces_modele");
+        let nouveauSelect = content.querySelector("#car_modele");
 
-        document.querySelector("#annonces_modele").replaceWith(nouveauSelect);
+        document.querySelector("#car_modele").replaceWith(nouveauSelect);
       });
   });
 };
