@@ -49,8 +49,8 @@ class Car
         '5' => 5,
         'Non classé' => 6
     ];
-   
-   
+
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -77,7 +77,7 @@ class Car
     #[ORM\Column]
     private ?int $kilometrage = null;
 
-    #[ORM\Column( nullable: true)]
+    #[ORM\Column(nullable: true)]
     private ?int $cv = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -87,7 +87,7 @@ class Car
     private ?int $critair = null;
 
     #[ORM\OneToOne(inversedBy: 'car', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Annonces $annonce = null;
 
     #[ORM\ManyToOne(inversedBy: 'cars')]

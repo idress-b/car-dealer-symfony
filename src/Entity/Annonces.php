@@ -28,17 +28,17 @@ class Annonces
     #[ORM\Column]
     private ?float $price = null;
 
-   
 
-    #[ORM\OneToMany(mappedBy: 'annonce', targetEntity: Images::class, orphanRemoval: true)]
+
+    #[ORM\OneToMany(mappedBy: 'annonce', targetEntity: Images::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection $images;
 
     #[ORM\OneToOne(mappedBy: 'annonce', cascade: ['persist', 'remove'])]
     private ?Car $car = null;
 
-   
 
-   
+
+
 
     public function __construct()
     {
@@ -98,10 +98,10 @@ class Annonces
         return $this;
     }
 
-   
 
-   
-   
+
+
+
 
     /**
      * @return Collection<int, Images>
@@ -140,17 +140,13 @@ class Annonces
 
     public function setCar(Car $car): self
     {
-        // set the owning side of the relation if necessary
-        if ($car->getAnnonce() !== $this) {
-            $car->setAnnonce($this);
-        }
+        // // set the owning side of the relation if necessary
+        // if ($car->getAnnonce() !== $this) {
+        //     $car->setAnnonce($this);
+        // }
 
         $this->car = $car;
 
         return $this;
     }
-
-   
-
-    
 }
