@@ -6,9 +6,37 @@
 {% block body %}
 	<h1>Nouvelle annonce</h1>
 
-	{{ form_start(form)}}
+	{{ form_start(form) }}
+	{{ form_widget(form._token) }}
+	{{ form_errors(form) }}
+	{{ form_row(form.title) }}
+	{{ form_row(form.subtitle) }}
+	{{ form_row(form.description) }}
+	{{ form_row(form.price)}}
+
+	{{ form_row(form.images)}}
+
+	<div class="mb-3">
+		<label for="secondary" class="form-label required">Images</label><input type="file" id="secondary" name="annonce[images][]" class="form-control"/>
+	</div>
+
 
 	<button class="btn btn-primary">{{ button_label|default('continuer') }}</button>
+	<button type="button" id="btn"></button>
+	{{ form_end(form,{render_rest: false})}}
+	<script>
+		window.onload = () => {
 
-	{{ form_end(form)}}
+const btn = document.querySelector('#btn');
+
+const imageInput = document.querySelector('#annonce_images');
+const input2 = document.querySelector('#secondary')
+console.log(imageInput);
+btn.addEventListener('click', (e) => { // imageInput.add(input2.files)
+imageInput.files[1] = input2.files[0]
+console.log(Object.entries(imageInput.files))
+console.log(input2.files)
+})
+}
+	</script>
 {% endblock %}

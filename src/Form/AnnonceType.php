@@ -4,10 +4,13 @@ namespace App\Form;
 
 use App\Entity\Annonces;
 use App\Entity\Car;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 
 class AnnonceType extends AbstractType
 {
@@ -18,13 +21,27 @@ class AnnonceType extends AbstractType
             ->add('subtitle')
             ->add('description')
             ->add('price')
-            // ->add('car', EntityType::class, [
-            //     'class' => Car::class,
-            //     'choice_label' => 'id',
-            //     'disabled' => true
+            // ->add('test', CollectionType::class, [
+            //     'entry_type' => ImageType::class,
+            //     'mapped' => false,
+            //     'prototype' => true,
+            //     'by_reference' => false,
+            //     'allow_add' => true,
+            //     'allow_delete' => true,
+            //     'error_bubbling' => false
+            ->add('images', FileType::class, [
+                'mapped' => false,
+                'label' => 'Images',
+                'multiple' => true,
+                // 'constraints' => [
+                //     new Image(
+                //         [
+                //             'maxSize' => '1M'
+                //         ]
+                //     )
+                // ]
 
-            // ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

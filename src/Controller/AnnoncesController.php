@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Annonces;
 use App\Entity\Car;
+use App\Entity\Images;
 use App\Form\AnnonceType;
 use App\Form\CarType;
 use App\Repository\AnnoncesRepository;
@@ -56,6 +57,20 @@ class AnnoncesController extends AbstractController
 
             $car = $carRepository->find($id);
             $annonce->setCar($car);
+
+            //gestion des images
+
+            dd($form->get('images')->getData());
+            foreach ($images as $image) {
+                $fichier = md5(uniqid() . '.' . $image->guessExtension());
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $fichier
+                );
+                $img = new Images();
+                $img->setName($fichier);
+                $annonce->addImage($img);
+            }
 
             $annoncesRepository->add($annonce, true);
 
