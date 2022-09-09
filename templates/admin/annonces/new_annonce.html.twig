@@ -31,11 +31,13 @@ const btn = document.querySelector('#btn');
 
 const imageInput = document.querySelector('#annonce_images');
 const input2 = document.querySelector('#secondary')
+let datatransfer = new DataTransfer();
 console.log(imageInput);
 btn.addEventListener('click', (e) => { // imageInput.add(input2.files)
-imageInput.files[1] = input2.files[0]
-console.log(Object.entries(imageInput.files))
-console.log(input2.files)
+datatransfer.items.add(input2.files[0]) 
+console.log(datatransfer.files)
+imageInput.files=datatransfer.files
+console.log(imageInput.files)
 })
 }
 	</script>
