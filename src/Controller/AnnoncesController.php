@@ -59,10 +59,10 @@ class AnnoncesController extends AbstractController
             $annonce->setCar($car);
 
             //gestion des images
+            $images = $form->get('images')->getData();
 
-            dd($form->get('images')->getData());
             foreach ($images as $image) {
-                $fichier = md5(uniqid() . '.' . $image->guessExtension());
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
                 $image->move(
                     $this->getParameter('images_directory'),
                     $fichier

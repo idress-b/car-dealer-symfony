@@ -140,10 +140,10 @@ class Annonces
 
     public function setCar(Car $car): self
     {
-        // // set the owning side of the relation if necessary
-        // if ($car->getAnnonce() !== $this) {
-        //     $car->setAnnonce($this);
-        // }
+        // set the owning side of the relation if necessary
+        if ($car->getAnnonce() !== $this) {
+            $car->setAnnonce($this);
+        }
 
         $this->car = $car;
 

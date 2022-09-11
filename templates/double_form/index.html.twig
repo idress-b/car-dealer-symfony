@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DoubleFormController!
+{% endblock %}
+
+
+{% block body %}
+
+	{{ form_start(formCar) }}
+	<div class="row">
+		<div class="col-12 col-lg-6">
+			{{ form_row(formCar.marque) }}
+			{{form_row(formCar.annee)}}
+
+		</div>
+		<div class="col-12 col-lg-6">
+			{{form_row(formCar.modele)}}
+			<br>
+
+		</div>
+
+	</div>
+	<div class="row">
+		<div class="col-12 col-lg-6">
+			{{form_row(formCar.carburant, {'attr':{'class':'inline-tags'}}) }}
+			{{ form_row(formCar.type)}}
+			{{ form_row(formCar.places)}}
+			{{ form_row(formCar.kilometrage)}}
+			{{form_row(formCar.critAir, {'attr':{'class':'inline-tags'}}) }}
+
+		</div>
+		<div class="col-12 col-lg-6">
+			{{form_row(formCar.gearBox, {'attr':{'class':'inline-tags'}})}}
+			{{ form_row(formCar.portes)}}
+			{{ form_row(formCar.cv)}}
+			{{ form_row(formCar.color)}}
+		</div>
+	</div>
+
+	<button class="btn btn-primary">{{ button_label|default('continuer') }}</button>
+	{{ form_end(formCar) }}
+
+
+	{{ form_start(formAnnonce) }}
+	{{ form_widget(formAnnonce._token) }}
+	{{ form_errors(formAnnonce) }}
+	{{ form_row(formAnnonce.title) }}
+	{{ form_row(formAnnonce.subtitle) }}
+	{{ form_row(formAnnonce.description) }}
+	{{ form_row(formAnnonce.price)}}
+
+	{{ form_row(formAnnonce.images)}}
+
+	<div class="mb-3">
+		<label for="secondary" class="form-label required">Images</label><input type="file" id="secondary" name="annonce[images][]" class="form-control"/>
+	</div>
+
+
+	<button class="btn btn-primary">{{ button_label|default('continuer') }}</button>
+	<button type="button" id="btn"></button>
+	{{ form_end(formAnnonce,{render_rest: false})}}
+
+{% endblock %}
+
+{% block javascript %}
+	<script defer src="{{asset('./js/ModeleFromMarque.js')}}"></script>
+{% endblock %}

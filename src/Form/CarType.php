@@ -17,9 +17,11 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class CarType extends AbstractType
 {
-   
-    public function __construct(private ModelesRepository $modelesRepository) {}
-   
+
+    public function __construct(private ModelesRepository $modelesRepository)
+    {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -38,7 +40,7 @@ class CarType extends AbstractType
             ->add('modele', EntityType::class, [
                 'class' => Modeles::class,
                 'placeholder' => 'choisir un modèle',
-                'disabled' => true
+                // 'disabled' => true
             ])
             ->add('annee', ChoiceType::class, [
                 'label' => 'Année',
@@ -107,12 +109,12 @@ class CarType extends AbstractType
                     'class' => Modeles::class,
                     'choices' => $modeles,
                     'placeholder' => '<< Choisissez >>',
-                    
+
                 ]);
         });
     }
-        
-   
+
+
 
     public function configureOptions(OptionsResolver $resolver): void
     {
